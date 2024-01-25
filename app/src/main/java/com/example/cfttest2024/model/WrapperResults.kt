@@ -6,12 +6,12 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class WrapperResults (
-    val results: List<Result>,
+    val userInfo: List<UserInfo>,
     val info: Info
 )
 
 @JsonClass(generateAdapter = true)
-data class Result (
+data class UserInfo (
     val gender: String,
     val name: Name,
     val location: Location,
