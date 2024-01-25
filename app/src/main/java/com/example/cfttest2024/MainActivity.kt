@@ -21,7 +21,6 @@ class MainActivity : ComponentActivity() {
         activityResultLauncher.launch(Manifest.permission.CALL_PHONE)
     }
 
-
     private val activityResultLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isPermissionGranted ->
             when {
