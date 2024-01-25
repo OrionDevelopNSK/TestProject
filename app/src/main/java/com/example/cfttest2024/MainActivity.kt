@@ -1,8 +1,11 @@
 package com.example.cfttest2024
 
+import android.Manifest
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -15,19 +18,33 @@ import com.example.cfttest2024.ui.theme.CFTTest2024Theme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            CFTTest2024Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
+        activityResultLauncher.launch(Manifest.permission.CALL_PHONE)
+    }
+
+
+    private val activityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { permission ->
+            var isGranted = permission
+            when {
+                isGranted -> {
+                    setContent {
+                        CFTTest2024Theme {
+                            Surface(
+                                modifier = Modifier.fillMaxSize(),
+                                color = MaterialTheme.colorScheme.background
+                            ) {
+                                Greeting("Android")
+                            }
+                        }
+                    }
+                }
+                else -> {
+                    Toast.makeText(this, getString(R.string.access_denied), Toast.LENGTH_SHORT).show()
                 }
             }
         }
-    }
 }
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
