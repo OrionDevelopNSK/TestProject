@@ -4,14 +4,15 @@ package com.example.cfttest2024.model
 import com.squareup.moshi.JsonClass
 
 
-@JsonClass(generateAdapter = true)
-data class WrapperResults (
-    val userInfo: List<UserInfo>,
-    val info: Info
-)
+
 
 @JsonClass(generateAdapter = true)
-data class UserInfo (
+data class Root(
+    val results: List<Result>,
+    val info: Info,
+)
+@JsonClass(generateAdapter = true)
+data class Result(
     val gender: String,
     val name: Name,
     val location: Location,
@@ -21,90 +22,80 @@ data class UserInfo (
     val registered: Registered,
     val phone: String,
     val cell: String,
-    val id: ID,
+    val id: Id,
     val picture: Picture,
-    val nat: String
+    val nat: String,
 )
-
 @JsonClass(generateAdapter = true)
-data class Info (
-    val seed: String,
-    val results: Long,
-    val page: Long,
-    val version: String
-)
-
-@JsonClass(generateAdapter = true)
-data class Name (
+data class Name(
     val title: String,
     val first: String,
-    val last: String
+    val last: String,
 )
-
 @JsonClass(generateAdapter = true)
-data class Location (
+data class Location(
     val street: Street,
     val city: String,
     val state: String,
     val country: String,
     val postcode: String,
     val coordinates: Coordinates,
-    val timezone: Timezone
+    val timezone: Timezone,
 )
-
 @JsonClass(generateAdapter = true)
-data class Street (
-    val number: String,
-    val name: String
+data class Street(
+    val number: Long,
+    val name: String,
 )
-
 @JsonClass(generateAdapter = true)
-data class Coordinates (
+data class Coordinates(
     val latitude: String,
-    val longitude: String
+    val longitude: String,
 )
-
 @JsonClass(generateAdapter = true)
-data class Timezone (
+data class Timezone(
     val offset: String,
-    val description: String
+    val description: String,
 )
-
 @JsonClass(generateAdapter = true)
-data class Login (
+data class Login(
     val uuid: String,
     val username: String,
     val password: String,
     val salt: String,
     val md5: String,
     val sha1: String,
-    val sha256: String
+    val sha256: String,
 )
-
 @JsonClass(generateAdapter = true)
-data class Dob (
+data class Dob(
     val date: String,
-    val age: String
+    val age: Long,
 )
-
 @JsonClass(generateAdapter = true)
-data class Registered (
+data class Registered(
     val date: String,
-    val age: String
+    val age: Long,
 )
-
 @JsonClass(generateAdapter = true)
-data class ID (
+data class Id(
     val name: String,
-    val value: String
+    val value: String,
 )
-
 @JsonClass(generateAdapter = true)
-data class Picture (
+data class Picture(
     val large: String,
     val medium: String,
-    val thumbnail: String
+    val thumbnail: String,
 )
+@JsonClass(generateAdapter = true)
+data class Info(
+    val seed: String,
+    val results: Long,
+    val page: Long,
+    val version: String,
+)
+
 
 
 
