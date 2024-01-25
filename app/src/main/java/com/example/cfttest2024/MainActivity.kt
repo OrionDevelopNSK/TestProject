@@ -23,28 +23,28 @@ class MainActivity : ComponentActivity() {
 
 
     private val activityResultLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { permission ->
-            var isGranted = permission
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isPermissionGranted ->
             when {
-                isGranted -> {
-                    setContent {
-                        CFTTest2024Theme {
-                            Surface(
-                                modifier = Modifier.fillMaxSize(),
-                                color = MaterialTheme.colorScheme.background
-                            ) {
-                                Greeting("Android")
-                            }
-                        }
-                    }
-                }
-                else -> {
-                    Toast.makeText(this, getString(R.string.access_denied), Toast.LENGTH_SHORT).show()
+                isPermissionGranted -> startApp()
+                else -> showAccessDeniedToast()
+            }
+        }
+    private fun startApp(){
+        setContent {
+            CFTTest2024Theme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Greeting("Android")
                 }
             }
         }
+    }
+    private fun showAccessDeniedToast(){
+        Toast.makeText(this, getString(R.string.access_denied), Toast.LENGTH_SHORT).show()
+    }
 }
-
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
