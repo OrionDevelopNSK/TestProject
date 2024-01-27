@@ -28,6 +28,7 @@ class MainActivity : ComponentActivity() {
                 Manifest.permission.CALL_PHONE
             )
         )
+        viewModel.createDataBaseHelper(this)
     }
 
     private val activityResultLauncher =
@@ -63,6 +64,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, viewModel: BaseViewModel) {
+
     Button(onClick = { viewModel.loadResults() }) {
         Text("")
     }

@@ -1,12 +1,11 @@
 package com.example.cfttest2024.data.entity
 
 import androidx.room.Embedded
+import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
 data class UserEntity (
-    @PrimaryKey(autoGenerate = true)
-    val idUserPrimaryKey: Int,
     val gender: String,
     @Embedded
     val name: NameEntity,
