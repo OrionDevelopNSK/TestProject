@@ -1,4 +1,4 @@
-package com.example.cfttest2024.viewmodel;
+package com.example.cfttest2024.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
