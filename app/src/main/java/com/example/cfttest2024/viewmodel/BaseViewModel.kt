@@ -28,12 +28,12 @@ class BaseViewModel : ViewModel() {
     private lateinit var dataBaseHelper : DataBaseHelper
 
 
-    open fun createDataBaseHelper(context: Context){
+    fun createDataBaseHelper(context: Context){
         val roomDatabaseBuilder = RoomDatabaseBuilder().getAppDatabase(context)
         dataBaseHelper = DataBaseHelper(roomDatabaseBuilder)
     }
 
-    open fun downloadResults() {
+    fun downloadResults() {
         viewModelScope.launch {
             ResultsApi.retrofitService.getResult().enqueue(object : Callback<Root> {
                 @SuppressLint("NullSafeMutableLiveData")

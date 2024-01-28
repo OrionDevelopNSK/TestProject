@@ -63,10 +63,3 @@ class MainActivity : ComponentActivity() {
 
 }
 
-@Composable
-fun Greeting(name: String, viewModel: BaseViewModel) {
-
-    Button(onClick = { viewModel.downloadResults() }) {
-        Text("")
-    }
-}
