@@ -255,7 +255,7 @@ fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
             Row {
                 Text("Page: ",
                     fontWeight = FontWeight.Bold)
-                Text("${root.info.version}")
+                Text(root.info.version)
             }
 
         }
