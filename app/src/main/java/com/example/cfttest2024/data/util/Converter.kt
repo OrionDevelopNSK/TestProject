@@ -13,7 +13,19 @@ import com.example.cfttest2024.data.entity.RootEntity
 import com.example.cfttest2024.data.entity.StreetEntity
 import com.example.cfttest2024.data.entity.TimezoneEntity
 import com.example.cfttest2024.data.entity.UserEntity
+import com.example.cfttest2024.model.Coordinates
+import com.example.cfttest2024.model.Dob
+import com.example.cfttest2024.model.Id
+import com.example.cfttest2024.model.Info
+import com.example.cfttest2024.model.Location
+import com.example.cfttest2024.model.Login
+import com.example.cfttest2024.model.Name
+import com.example.cfttest2024.model.Picture
+import com.example.cfttest2024.model.Registered
+import com.example.cfttest2024.model.Result
 import com.example.cfttest2024.model.Root
+import com.example.cfttest2024.model.Street
+import com.example.cfttest2024.model.Timezone
 
 object Converter {
     fun objectToEntity(root: Root): RootEntity {
@@ -126,6 +138,127 @@ object Converter {
             results = userEntity,
             rootEntityPrimaryKey = 0
         )
+
+    }
+
+    fun entitiesToObjects(rootEntities: List<RootEntity>): List<Root> {
+
+        val entities: MutableList<Root> = mutableListOf()
+
+        for (rootEntity in rootEntities) {
+            val infoEntity = rootEntity.info
+
+
+            val info = Info(
+                seed = infoEntity.seed,
+                results = infoEntity.results,
+                page = infoEntity.page,
+                version = infoEntity.version
+            )
+            val resultEntity = rootEntity.results
+            val cellEntity = resultEntity.cell
+            val dobEntity = resultEntity.dob
+            val idEntity = resultEntity.id
+            val emailEntity = resultEntity.email
+            val genderEntity = resultEntity.gender
+            val locationEntity = resultEntity.location
+            val loginEntity = resultEntity.login
+            val nameEntity = resultEntity.name
+            val natEntity = resultEntity.nat
+            val phoneEntity = resultEntity.phone
+            val pictureEntity = resultEntity.picture
+            val registeredEntity = resultEntity.registered
+
+            val streetEntity = locationEntity.street
+            val coordinatesEntity = locationEntity.coordinates
+            val timezoneEntity = locationEntity.timezone
+
+            val dob = Dob(
+                date = dobEntity.date,
+                age = dobEntity.age
+            )
+
+            val id = Id(
+                name = idEntity.name,
+                value = idEntity.value
+            )
+
+            val registered = Registered(
+                date = registeredEntity.date,
+                age = registeredEntity.age
+            )
+
+            val picture = Picture(
+                large = pictureEntity.large,
+                medium = pictureEntity.medium,
+                thumbnail = pictureEntity.thumbnail
+            )
+
+            val coordinates = Coordinates(
+                latitude = coordinatesEntity.latitude,
+                longitude = coordinatesEntity.longitude
+            )
+
+            val timezone = Timezone(
+                offset = timezoneEntity.offset,
+                description = timezoneEntity.description
+            )
+
+            val street = Street(
+                number = streetEntity.number,
+                name = streetEntity.name
+            )
+
+            val location = Location(
+                street = street,
+                city = locationEntity.city,
+                state = locationEntity.state,
+                country = locationEntity.country,
+                postcode = locationEntity.postcode,
+                coordinates = coordinates,
+                timezone = timezone
+            )
+
+            val login = Login(
+                uuid = loginEntity.uuid,
+                username = loginEntity.username,
+                password = loginEntity.password,
+                salt = loginEntity.salt,
+                md5 = loginEntity.md5,
+                sha1 = loginEntity.sha1,
+                sha256 = loginEntity.sha256
+            )
+
+            val name = Name(
+                title = nameEntity.title,
+                first = nameEntity.first,
+                last = nameEntity.last
+            )
+
+            val result = Result(
+                gender = genderEntity,
+                name = name,
+                location = location,
+                email = emailEntity,
+                login = login,
+                dob = dob,
+                registered = registered,
+                phone = phoneEntity,
+                cell = cellEntity,
+                id = id,
+                picture = picture,
+                nat = natEntity
+            )
+
+            val tmp = Root(
+                info = info,
+                results = listOf(result))
+
+            entities.add(tmp)
+
+        }
+
+        return entities
 
     }
 

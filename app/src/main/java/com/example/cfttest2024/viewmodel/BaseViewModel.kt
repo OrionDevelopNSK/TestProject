@@ -2,7 +2,6 @@ package com.example.cfttest2024.viewmodel;
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,8 +19,8 @@ import retrofit2.Response
 
 
 class BaseViewModel : ViewModel() {
-    private var _rootData: MutableLiveData<Root> = MutableLiveData()
-    val rootData: LiveData<Root> = _rootData
+    private var _rootData: MutableLiveData<List<Root>> = MutableLiveData()
+    val rootData: LiveData<List<Root>> = _rootData
 
     val rootEntities: MutableList<RootEntity> = mutableListOf()
 
@@ -34,42 +33,36 @@ class BaseViewModel : ViewModel() {
         dataBaseHelper = DataBaseHelper(roomDatabaseBuilder)
     }
 
-
-
-    open fun loadResults() {
+    open fun downloadResults() {
         viewModelScope.launch {
             ResultsApi.retrofitService.getResult().enqueue(object : Callback<Root> {
                 @SuppressLint("NullSafeMutableLiveData")
                 override fun onResponse(call: Call<Root>, response: Response<Root>) {
                     val root = response.body()
                     if (root != null){
-                        _rootData.value = root
                         val objectToEntity = Converter.objectToEntity(root)
                         rootEntities.add(objectToEntity)
-                        saveInfo()
+                        saveInfoToDatabase()
+                        loadInfoFromDatabase()
                     }
-
-
-//                    response.body()!!.results.forEach { Log.e("", it.email) }
-
                 }
 
                 override fun onFailure(call: Call<Root>, t: Throwable) {
 
                 }
             })
-
         }
 
 
     }
 
-    fun saveInfo(){
+    fun saveInfoToDatabase(){
         dataBaseHelper.saveInfoAndUserInfo(rootEntities)
     }
 
-    fun loadInfo(){
-
+    fun loadInfoFromDatabase(){
+        val tmp = dataBaseHelper.loadInfoAndUserInfo()
+        _rootData.value = Converter.entitiesToObjects(tmp).reversed()
     }
 
 }

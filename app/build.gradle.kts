@@ -79,9 +79,17 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0")
     kapt("androidx.lifecycle:lifecycle-compiler:2.7.0")
 
+    implementation("androidx.compose.runtime:runtime:1.6.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
+
+
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
+
+    implementation ("androidx.compose.material3:material3:1.1.2")
+
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
 
 }
