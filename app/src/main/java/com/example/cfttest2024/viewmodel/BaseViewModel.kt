@@ -2,6 +2,9 @@ package com.example.cfttest2024.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,6 +32,8 @@ class BaseViewModel : ViewModel() {
 
 
     private lateinit var dataBaseHelper : DataBaseHelper
+
+    private val googleMap = "http://maps.google.com/maps?q=loc:"
 
 
     fun createDataBaseHelper(context: Context){
@@ -65,11 +70,48 @@ class BaseViewModel : ViewModel() {
 
     fun loadInfoFromDatabase(){
         val tmp = dataBaseHelper.loadInfoAndUserInfo()
-        _rootData.value = Converter.entitiesToObjects(tmp).reversed()
+        if (tmp != null && tmp.isNotEmpty()) _rootData.value = Converter.entitiesToObjects(tmp).reversed()
     }
 
     fun setIndexUser(index: Int){
         _currentIndexUser.value = index
+    }
+
+    fun openMap(context: Context) {
+        val root =
+            currentIndexUser.value?.let { rootData.value?.get(it) } ?: return
+        val longitude = root.results[0].location.coordinates.longitude
+        val latitude = root.results[0].location.coordinates.latitude
+
+        val intent =
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("$googleMap$latitude,$longitude")
+            )
+        ContextCompat.startActivity(context, intent, null)
+    }
+
+    fun openEmailProgram(context: Context) {
+        val root =
+            currentIndexUser.value?.let { rootData.value?.get(it) } ?: return
+        val email = root.results[0].email
+
+        val intent =
+            Intent(Intent.ACTION_VIEW)
+                .setData(Uri.parse("mailto:$email"))
+                .setType("message/rfc822")
+        val createChooser = Intent.createChooser(intent, null)
+        ContextCompat.startActivity(context, createChooser, null)
+    }
+
+    fun callPhone(context: Context) {
+        val root =
+            currentIndexUser.value?.let { rootData.value?.get(it) } ?: return
+        val phone = root.results[0].phone
+
+        val intent =
+            Intent(Intent.ACTION_DIAL, Uri.parse("tel: $phone"))
+        ContextCompat.startActivity(context, intent, null)
     }
 
 }

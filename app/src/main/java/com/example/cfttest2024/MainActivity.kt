@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
             )
         )
         viewModel.createDataBaseHelper(this)
+        viewModel.loadInfoFromDatabase()
     }
 
     private val activityResultLauncher =

@@ -1,5 +1,6 @@
 package com.example.cfttest2024.screen
 
+import android.app.Activity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -33,6 +35,7 @@ fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
     val root = viewModel.currentIndexUser.value?.let { viewModel.rootData.value?.get(it) } ?: return
     val result = root.results[0]
     val scrollState = rememberScrollState()
+    val context = LocalContext.current as Activity
 
     Column(
         modifier = Modifier
@@ -118,25 +121,35 @@ fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
                 Text("${result.location.timezone.description} (${result.location.timezone.offset})")
             }
 
+            Spacer(modifier = Modifier.height(24.dp))
+
             Row {
                 Text("Coordinates: ",
                     fontWeight = FontWeight.Bold)
                 Text("Latitude: ${result.location.coordinates.latitude}, longitude: ${result.location.coordinates.longitude}",
-                    modifier = Modifier.clickable { })
+                    modifier = Modifier.clickable {viewModel.openMap(context) },
+                    style = TextStyle(fontStyle = FontStyle.Italic))
             }
+
+            Spacer(modifier = Modifier.height(24.dp))
 
             Row {
                 Text("Tel.: ",
                     fontWeight = FontWeight.Bold)
-                Text(result.phone, modifier = Modifier.clickable { })
+                Text(result.phone, modifier = Modifier.clickable {viewModel.callPhone(context) },
+                    style = TextStyle(fontStyle = FontStyle.Italic))
             }
+
+            Spacer(modifier = Modifier.height(24.dp))
 
             Row {
                 Text("Email: ",
-                    fontWeight = FontWeight.Bold)
+                    fontWeight = FontWeight.Bold
+                )
                 Text(
                     result.email,
-                    modifier = Modifier.clickable { })
+                    modifier = Modifier.clickable { viewModel.openEmailProgram(context) },
+                    style = TextStyle(fontStyle = FontStyle.Italic))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
