@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.cfttest2024.screen.MainScreen
+import com.example.cfttest2024.navigation.AppNavHost
 import com.example.cfttest2024.ui.theme.CFTTest2024Theme
 import com.example.cfttest2024.viewmodel.BaseViewModel
 
@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen(viewModel)
+                    AppNavHost(viewModel = viewModel)
                 }
             }
         }

@@ -20,7 +20,7 @@ import com.example.cfttest2024.screen.container.Item
 import com.example.cfttest2024.viewmodel.BaseViewModel
 
 @Composable
-fun MainScreen(viewModel: BaseViewModel) {
+fun MainScreen(viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
 
     val listState = rememberLazyListState()
     val infos = viewModel.rootData.observeAsState(mutableListOf())
@@ -30,11 +30,15 @@ fun MainScreen(viewModel: BaseViewModel) {
         .fillMaxWidth().fillMaxHeight()) {
         LazyColumn(
             state = listState,
-            modifier = Modifier.weight(0.75f)
+            modifier = Modifier.weight(0.70f)
 
         ) {
             itemsIndexed(items = infos.value) { index, item: Root ->
-                Item(root = item, index = index, viewModel = viewModel)
+                Item(
+                    root = item,
+                    index = index,
+                    viewModel = viewModel,
+                    onNavigateToDetailScreen = onNavigateToDetailScreen)
             }
         }
 

@@ -22,6 +22,9 @@ class BaseViewModel : ViewModel() {
     private var _rootData: MutableLiveData<List<Root>> = MutableLiveData()
     val rootData: LiveData<List<Root>> = _rootData
 
+    private var _currentIndexUser: MutableLiveData<Int> = MutableLiveData(0)
+    val currentIndexUser: LiveData<Int> = _currentIndexUser
+
     val rootEntities: MutableList<RootEntity> = mutableListOf()
 
 
@@ -63,6 +66,10 @@ class BaseViewModel : ViewModel() {
     fun loadInfoFromDatabase(){
         val tmp = dataBaseHelper.loadInfoAndUserInfo()
         _rootData.value = Converter.entitiesToObjects(tmp).reversed()
+    }
+
+    fun setIndexUser(index: Int){
+        _currentIndexUser.value = index
     }
 
 }

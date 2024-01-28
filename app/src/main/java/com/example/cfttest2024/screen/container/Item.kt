@@ -24,14 +24,17 @@ import com.example.cfttest2024.viewmodel.BaseViewModel
 
 
 @Composable
-fun Item(root: Root, index: Int, viewModel: BaseViewModel) {
+fun Item(root: Root, index: Int, viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
     val result = root.results[0]
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End,
         modifier = Modifier.padding(8.dp)
-            .clickable {  }
+            .clickable {
+                viewModel.setIndexUser(index)
+                onNavigateToDetailScreen.invoke()
+            }
     ) {
 
         AsyncImage(
