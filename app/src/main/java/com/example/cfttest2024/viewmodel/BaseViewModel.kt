@@ -97,9 +97,8 @@ class BaseViewModel : ViewModel() {
         val email = root.results[0].email
 
         val intent =
-            Intent(Intent.ACTION_VIEW)
+            Intent(Intent.ACTION_SENDTO)
                 .setData(Uri.parse("mailto:$email"))
-                .setType("message/rfc822")
         val createChooser = Intent.createChooser(intent, null)
         ContextCompat.startActivity(context, createChooser, null)
     }
