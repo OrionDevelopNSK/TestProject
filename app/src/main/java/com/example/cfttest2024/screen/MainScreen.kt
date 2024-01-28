@@ -33,8 +33,8 @@ fun MainScreen(viewModel: BaseViewModel) {
             modifier = Modifier.weight(0.75f)
 
         ) {
-            itemsIndexed(items = infos.value) { _, item: Root ->
-                Item(result = item.results[0])
+            itemsIndexed(items = infos.value) { index, item: Root ->
+                Item(root = item, index = index, viewModel = viewModel)
             }
         }
 

@@ -1,5 +1,6 @@
 package com.example.cfttest2024.screen.container
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,15 +19,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.cfttest2024.model.Result
+import com.example.cfttest2024.model.Root
+import com.example.cfttest2024.viewmodel.BaseViewModel
 
 
 @Composable
-fun Item(result: Result) {
+fun Item(root: Root, index: Int, viewModel: BaseViewModel) {
+    val result = root.results[0]
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End,
         modifier = Modifier.padding(8.dp)
+            .clickable {  }
     ) {
 
         AsyncImage(
