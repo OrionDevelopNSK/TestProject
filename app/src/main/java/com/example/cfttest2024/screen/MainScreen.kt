@@ -1,5 +1,6 @@
 package com.example.cfttest2024.screen
 
+import android.app.Activity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.cfttest2024.model.Root
 import com.example.cfttest2024.screen.container.Item
@@ -24,10 +26,14 @@ fun MainScreen(viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
 
     val listState = rememberLazyListState()
     val infos = viewModel.rootData.observeAsState(mutableListOf())
+    val context = LocalContext.current as Activity
 
-    Column(modifier = Modifier
-        .padding(vertical = 8.dp, horizontal = 8.dp)
-        .fillMaxWidth().fillMaxHeight()) {
+    Column(
+        modifier = Modifier
+            .padding(vertical = 8.dp, horizontal = 8.dp)
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
         LazyColumn(
             state = listState,
             modifier = Modifier.weight(0.70f)
@@ -38,13 +44,19 @@ fun MainScreen(viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
                     root = item,
                     index = index,
                     viewModel = viewModel,
-                    onNavigateToDetailScreen = onNavigateToDetailScreen)
+                    onNavigateToDetailScreen = onNavigateToDetailScreen
+                )
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { viewModel.downloadResults() },
-            modifier = Modifier.fillMaxWidth().height(40.dp)) {
+        Button(
+            onClick = { viewModel.downloadResults(context) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .padding(8.dp)
+        ) {
             Text("Load user")
         }
 

@@ -26,6 +26,7 @@ import com.example.cfttest2024.model.Result
 import com.example.cfttest2024.model.Root
 import com.example.cfttest2024.model.Street
 import com.example.cfttest2024.model.Timezone
+import java.text.SimpleDateFormat
 
 object Converter {
     fun objectToEntity(root: Root): RootEntity {
@@ -260,6 +261,13 @@ object Converter {
 
         return entities
 
+    }
+
+    fun isoToDate(str: String): String {
+        val isoDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val date = isoDateFormat.parse(str)
+        val targetDateFormat = SimpleDateFormat("dd MMM yyyy, HH:mm:ss")
+        return targetDateFormat.format(date)
     }
 
 }

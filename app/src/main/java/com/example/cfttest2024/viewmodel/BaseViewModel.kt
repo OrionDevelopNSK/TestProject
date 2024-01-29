@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cfttest2024.R
 import com.example.cfttest2024.data.database.DataBaseHelper
 import com.example.cfttest2024.data.database.RoomDatabaseBuilder
 import com.example.cfttest2024.data.entity.RootEntity
@@ -30,24 +32,23 @@ class BaseViewModel : ViewModel() {
 
     val rootEntities: MutableList<RootEntity> = mutableListOf()
 
-
-    private lateinit var dataBaseHelper : DataBaseHelper
+    private lateinit var dataBaseHelper: DataBaseHelper
 
     private val googleMap = "http://maps.google.com/maps?q=loc:"
 
 
-    fun createDataBaseHelper(context: Context){
+    fun createDataBaseHelper(context: Context) {
         val roomDatabaseBuilder = RoomDatabaseBuilder().getAppDatabase(context)
         dataBaseHelper = DataBaseHelper(roomDatabaseBuilder)
     }
 
-    fun downloadResults() {
+    fun downloadResults(context: Context) {
         viewModelScope.launch {
             ResultsApi.retrofitService.getResult().enqueue(object : Callback<Root> {
                 @SuppressLint("NullSafeMutableLiveData")
                 override fun onResponse(call: Call<Root>, response: Response<Root>) {
                     val root = response.body()
-                    if (root != null){
+                    if (root != null) {
                         val objectToEntity = Converter.objectToEntity(root)
                         rootEntities.add(objectToEntity)
                         saveInfoToDatabase()
@@ -56,7 +57,10 @@ class BaseViewModel : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<Root>, t: Throwable) {
-
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.error_download), Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
         }
@@ -64,16 +68,17 @@ class BaseViewModel : ViewModel() {
 
     }
 
-    fun saveInfoToDatabase(){
+    fun saveInfoToDatabase() {
         dataBaseHelper.saveInfoAndUserInfo(rootEntities)
     }
 
-    fun loadInfoFromDatabase(){
+    fun loadInfoFromDatabase() {
         val tmp = dataBaseHelper.loadInfoAndUserInfo()
-        if (tmp != null && tmp.isNotEmpty()) _rootData.value = Converter.entitiesToObjects(tmp).reversed()
+        if (tmp != null && tmp.isNotEmpty()) _rootData.value =
+            Converter.entitiesToObjects(tmp).reversed()
     }
 
-    fun setIndexUser(index: Int){
+    fun setIndexUser(index: Int) {
         _currentIndexUser.value = index
     }
 
@@ -112,5 +117,6 @@ class BaseViewModel : ViewModel() {
             Intent(Intent.ACTION_DIAL, Uri.parse("tel: $phone"))
         ContextCompat.startActivity(context, intent, null)
     }
+
 
 }
