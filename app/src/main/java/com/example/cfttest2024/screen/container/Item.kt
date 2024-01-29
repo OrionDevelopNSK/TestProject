@@ -19,7 +19,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getString
 import coil.compose.AsyncImage
@@ -57,9 +56,13 @@ fun Item(root: Root, index: Int, viewModel: BaseViewModel, onNavigateToDetailScr
                 .clip(CircleShape)
                 .size(40.dp),
             onError = {
-                Toast.makeText(context, getString(context, R.string.access_denied), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    getString(context, R.string.access_denied),
+                    Toast.LENGTH_SHORT
+                ).show()
             },
-            placeholder =  painterResource(id = R.drawable.placeholder)
+            placeholder = painterResource(id = R.drawable.placeholder)
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column {

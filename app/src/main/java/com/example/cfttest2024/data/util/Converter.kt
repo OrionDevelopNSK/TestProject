@@ -266,8 +266,12 @@ object Converter {
     fun isoToDate(str: String): String {
         val isoDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         val date = isoDateFormat.parse(str)
-        val targetDateFormat = SimpleDateFormat("dd MMM yyyy, HH:mm:ss")
-        return targetDateFormat.format(date)
+        return if (date != null){
+            val targetDateFormat = SimpleDateFormat("dd MMM yyyy, HH:mm:ss")
+            targetDateFormat.format(date)
+        }else{
+            str
+        }
     }
 
 }
