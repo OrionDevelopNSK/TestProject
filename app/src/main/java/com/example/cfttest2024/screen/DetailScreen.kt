@@ -400,7 +400,7 @@ fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
                         "Id: ",
                         fontWeight = FontWeight.Bold
                     )
-                    Text("${result.id.name},  (${result.id.value}")
+                    Text("${result.id.name},  ${result.id.value}")
                 }
 
                 Row(
