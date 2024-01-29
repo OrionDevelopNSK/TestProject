@@ -12,9 +12,9 @@ class DataBaseHelper(
 ) {
     private val roomRepo = RoomRepository(dataBase.roomDao())
 
-    fun saveInfoAndUserInfo(rootEntities: MutableList<RootEntity>){
+    fun saveInfoAndUserInfo(rootEntity: RootEntity){
         runBlocking {
-            launch(Dispatchers.IO) { roomRepo.insertInfoAndUserInfo(rootEntities) }
+            launch(Dispatchers.IO) { roomRepo.insertInfoAndUserInfo(rootEntity) }
         }
     }
 

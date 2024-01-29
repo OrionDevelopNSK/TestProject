@@ -30,8 +30,6 @@ class BaseViewModel : ViewModel() {
     private var _currentIndexUser: MutableLiveData<Int> = MutableLiveData(0)
     val currentIndexUser: LiveData<Int> = _currentIndexUser
 
-    val rootEntities: MutableList<RootEntity> = mutableListOf()
-
     private lateinit var dataBaseHelper: DataBaseHelper
 
     private val googleMap = "http://maps.google.com/maps?q=loc:"
@@ -50,8 +48,7 @@ class BaseViewModel : ViewModel() {
                     val root = response.body()
                     if (root != null) {
                         val objectToEntity = Converter.objectToEntity(root)
-                        rootEntities.add(objectToEntity)
-                        saveInfoToDatabase()
+                        saveInfoToDatabase(objectToEntity)
                         loadInfoFromDatabase()
                     }
                 }
@@ -68,8 +65,8 @@ class BaseViewModel : ViewModel() {
 
     }
 
-    fun saveInfoToDatabase() {
-        dataBaseHelper.saveInfoAndUserInfo(rootEntities)
+    fun saveInfoToDatabase(rootEntity: RootEntity) {
+        dataBaseHelper.saveInfoAndUserInfo(rootEntity)
     }
 
     fun loadInfoFromDatabase() {

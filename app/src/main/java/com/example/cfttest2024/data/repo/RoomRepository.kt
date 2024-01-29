@@ -4,7 +4,7 @@ import com.example.cfttest2024.data.dao.RoomDao
 import com.example.cfttest2024.data.entity.RootEntity
 
 class RoomRepository(private val roomDao: RoomDao) {
-    fun insertInfoAndUserInfo(rootEntity: MutableList<RootEntity>){
+    fun insertInfoAndUserInfo(rootEntity: RootEntity){
         roomDao.insertInfoAndUserInfo(rootEntity)
     }
 

@@ -12,5 +12,5 @@ abstract class RoomDao {
     abstract fun getInfoAndUserInfo() : MutableList<RootEntity>
 
     @Insert
-    abstract fun insertInfoAndUserInfo (rootEntity: MutableList<RootEntity>)
+    abstract fun insertInfoAndUserInfo (rootEntity: RootEntity)
 }
