@@ -7,7 +7,7 @@ import com.example.cfttest2024.data.entity.RootEntity
 
 
 @Database(
-    entities = [RootEntity::class], version = 1
+    entities = [RootEntity::class], version = 1, exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {
     abstract fun roomDao(): RoomDao
