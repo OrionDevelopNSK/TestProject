@@ -68,7 +68,7 @@ fun MainScreen(viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
         }
 
         Button(
-            onClick = { viewModel.clearDatabase(context) },
+            onClick = { viewModel.clearDatabase() },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(75.dp)

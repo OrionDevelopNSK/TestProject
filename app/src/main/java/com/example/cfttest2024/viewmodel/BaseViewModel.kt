@@ -42,16 +42,13 @@ class BaseViewModel : ViewModel() {
         dataBaseHelper = DataBaseHelper(roomDatabaseBuilder)
     }
 
-    fun clearDatabase(context: Context){
-
+    fun clearDatabase(){
         viewModelScope.launch {
-
             runBlocking {
                 launch(Dispatchers.IO) {
                     dataBaseHelper.clearDatabase()
                 }
             }
-
         }
         _rootData.value = emptyList()
 
@@ -78,8 +75,6 @@ class BaseViewModel : ViewModel() {
                 }
             })
         }
-
-
     }
 
     fun saveInfoToDatabase(rootEntity: RootEntity) {
@@ -131,6 +126,4 @@ class BaseViewModel : ViewModel() {
             Intent(Intent.ACTION_DIAL, Uri.parse("tel: $phone"))
         ContextCompat.startActivity(context, intent, null)
     }
-
-
 }
