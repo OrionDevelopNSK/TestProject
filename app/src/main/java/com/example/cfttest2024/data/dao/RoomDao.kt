@@ -13,4 +13,7 @@ abstract class RoomDao {
 
     @Insert
     abstract fun insertInfoAndUserInfo (rootEntity: RootEntity)
+
+    @Query("DELETE FROM users_db")
+    abstract fun clearDatabase()
 }

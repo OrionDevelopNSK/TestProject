@@ -17,7 +17,9 @@ import com.example.cfttest2024.data.entity.RootEntity
 import com.example.cfttest2024.data.util.Converter
 import com.example.cfttest2024.model.Root
 import com.example.cfttest2024.retrofit.ResultsApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +40,21 @@ class BaseViewModel : ViewModel() {
     fun createDataBaseHelper(context: Context) {
         val roomDatabaseBuilder = RoomDatabaseBuilder().getAppDatabase(context)
         dataBaseHelper = DataBaseHelper(roomDatabaseBuilder)
+    }
+
+    fun clearDatabase(context: Context){
+
+        viewModelScope.launch {
+
+            runBlocking {
+                launch(Dispatchers.IO) {
+                    dataBaseHelper.clearDatabase()
+                }
+            }
+
+        }
+        _rootData.value = emptyList()
+
     }
 
     fun downloadResults(context: Context) {

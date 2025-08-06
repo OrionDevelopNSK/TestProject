@@ -13,7 +13,9 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -34,11 +36,14 @@ fun MainScreen(viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
             .fillMaxWidth()
             .fillMaxHeight()
     ) {
+
+
         LazyColumn(
             state = listState,
             modifier = Modifier.weight(0.70f)
 
         ) {
+
             itemsIndexed(items = infos.value) { index, item: Root ->
                 Item(
                     root = item,
@@ -47,21 +52,34 @@ fun MainScreen(viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
                     onNavigateToDetailScreen = onNavigateToDetailScreen
                 )
             }
+
         }
 
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { viewModel.downloadResults(context) },
+            onClick = {
+                viewModel.downloadResults(context)
+                println(infos.value.size)
+            },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
+                .height(75.dp)
                 .padding(8.dp)
         ) {
             Text("Load user")
         }
 
-    }
+        Button(
+            onClick = { viewModel.clearDatabase(context) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(75.dp)
+                .padding(8.dp)
+        ) {
+            Text("Clear users list")
+        }
 
+    }
 
 }
 

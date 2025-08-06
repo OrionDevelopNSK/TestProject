@@ -11,4 +11,8 @@ class RoomRepository(private val roomDao: RoomDao) {
     fun getInfoAndUserInfo() : MutableList<RootEntity>{
         return roomDao.getInfoAndUserInfo()
     }
+
+    fun clearDatabase(){
+        roomDao.clearDatabase()
+    }
 }

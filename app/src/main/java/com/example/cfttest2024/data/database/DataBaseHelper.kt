@@ -29,5 +29,7 @@ class DataBaseHelper(
         return tmp
     }
 
-
+    fun clearDatabase(){
+        roomRepo.clearDatabase()
+    }
 }
