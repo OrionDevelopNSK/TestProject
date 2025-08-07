@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.test.R
+import com.example.testproject.R
 import com.example.testproject.data.database.DataBaseHelper
 import com.example.testproject.data.database.RoomDatabaseBuilder
 import com.example.testproject.data.entity.RootEntity

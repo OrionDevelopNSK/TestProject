@@ -1,6 +1,5 @@
 package com.example.testproject.screen.container
 
-import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getString
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.test.R
+import com.example.testproject.R
 import com.example.testproject.model.Root
 import com.example.testproject.viewmodel.BaseViewModel
 

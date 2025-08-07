@@ -103,7 +103,7 @@ fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
                         .build(),
                     contentDescription = "",
                     contentScale = ContentScale.Crop,
-                    error = painterResource(id = drawable.no_internet),
+                    error = painterResource(id = R.drawable.no_internet),
                     modifier = Modifier
                         .clip(CircleShape)
                         .size(150.dp)
@@ -115,7 +115,7 @@ fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
                             Toast.LENGTH_SHORT
                         ).show()
                     },
-                    placeholder = painterResource(id = drawable.placeholder)
+                    placeholder = painterResource(id = R.drawable.placeholder)
                 )
 
                 Text(
@@ -134,7 +134,7 @@ fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Icon(
-                        painterResource(id = drawable.phone),
+                        painterResource(id = R.drawable.phone),
                         contentDescription = "",
                         modifier = Modifier.size(16.dp),
                         tint = Color.Red
@@ -154,7 +154,7 @@ fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Icon(
-                        painterResource(id = drawable.email),
+                        painterResource(id = R.drawable.email),
                         contentDescription = "",
                         modifier = Modifier.size(16.dp),
                         tint = Color.Red
@@ -174,7 +174,7 @@ fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Icon(
-                        painterResource(id = drawable.loc),
+                        painterResource(id = R.drawable.loc),
                         contentDescription = "",
                         modifier = Modifier.size(16.dp),
                         tint = Color.Red

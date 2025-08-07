@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.test.R
 import com.example.testproject.navigation.AppNavHost
 import com.example.testproject.ui.theme.CFTTestTheme
 import com.example.testproject.viewmodel.BaseViewModel
