@@ -83,7 +83,7 @@ fun MainScreen(viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(75.dp)
+                    .height(60.dp)
                     .padding(8.dp)
             ) {
                 Text("Load user")
@@ -93,7 +93,7 @@ fun MainScreen(viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
                 onClick = { viewModel.clearDatabase() },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(75.dp)
+                    .height(60.dp)
                     .padding(8.dp)
             ) {
                 Text("Clear users list")
