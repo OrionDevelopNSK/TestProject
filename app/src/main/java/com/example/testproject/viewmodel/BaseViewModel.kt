@@ -78,8 +78,7 @@ class BaseViewModel : ViewModel() {
                     response.body()?.let { root ->
                         viewModelScope.launch {
                             val objectToEntity = Converter.objectToEntity(root)
-                            saveInfoToDatabase(objectToEntity)
-                            loadInfoFromDatabase()
+                            saveAndLoadInfoToDatabase(objectToEntity)
                         }
                     }
                 } else {
@@ -93,21 +92,25 @@ class BaseViewModel : ViewModel() {
         })
     }
 
-    fun saveInfoToDatabase(rootEntity: RootEntity) {
+    //необходимое зло, чтобы запустить в одной корутине запись и
+    // последующее чтение по порядку друг за другом
+    fun saveAndLoadInfoToDatabase(rootEntity: RootEntity){
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 dataBaseHelper.saveInfoAndUserInfo(rootEntity)
+                val tmp = dataBaseHelper.loadInfoAndUserInfo()
+                if (tmp.isNotEmpty()) _rootData.postValue(
+                    Converter.entitiesToObjects(tmp).reversed())
             }
         }
     }
 
     fun loadInfoFromDatabase() {
         viewModelScope.launch {
-            val tmp = withContext(Dispatchers.IO) {
-                dataBaseHelper.loadInfoAndUserInfo()
+            withContext(Dispatchers.IO) {
+                val tmp = dataBaseHelper.loadInfoAndUserInfo()
+                if (tmp.isNotEmpty()) _rootData.postValue(Converter.entitiesToObjects(tmp).reversed())
             }
-
-            if (tmp.isNotEmpty()) _rootData.value = Converter.entitiesToObjects(tmp).reversed()
         }
     }
 

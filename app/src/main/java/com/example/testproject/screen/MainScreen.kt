@@ -54,7 +54,7 @@ fun MainScreen(viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
 
         Column(
             modifier = Modifier
-                .padding(padding)
+                .padding(vertical = 8.dp, horizontal = 8.dp)
                 .fillMaxWidth()
                 .fillMaxHeight()
         ) {
@@ -73,7 +73,6 @@ fun MainScreen(viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
                         onNavigateToDetailScreen = onNavigateToDetailScreen
                     )
                 }
-
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -99,9 +98,7 @@ fun MainScreen(viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
             ) {
                 Text("Clear users list")
             }
-
         }
-
     }
 }
 

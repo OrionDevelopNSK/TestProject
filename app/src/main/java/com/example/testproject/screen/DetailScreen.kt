@@ -72,7 +72,6 @@ fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
                 )
             context.startActivity(intent)
         }
-
     }
 
     Column(
