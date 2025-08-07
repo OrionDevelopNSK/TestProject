@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CFTTest2024</string>
+    <string name="app_name">Test</string>
     <string name="access_denied">Нет доступа</string>
     <string name="error_download">Ошибка загрузки данных</string>
     <string name="check_internet_connection">Проверьте соединение с интернетом</string>

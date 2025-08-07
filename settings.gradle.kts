@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CFTTest2024"
+rootProject.name = "Test"
 include(":app")
  

@@ -9,11 +9,11 @@ plugins {
 
 
 android {
-    namespace = "com.example.cfttest2024"
+    namespace = "com.example.test"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.cfttest2024"
+        applicationId = "com.example.test"
         minSdk = 30
         targetSdk = 34
         versionCode = 1
