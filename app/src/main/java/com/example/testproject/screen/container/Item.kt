@@ -31,7 +31,7 @@ import com.example.testproject.viewmodel.BaseViewModel
 @Composable
 fun Item(root: Root, index: Int, viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
     val result = root.results[0]
-    val context = LocalContext.current as Activity
+    val context = LocalContext.current
 
     Row(
         verticalAlignment = Alignment.CenterVertically,

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Test</string>
+    <string name="app_name">TestProject</string>
     <string name="access_denied">Access denied</string>
     <string name="error_download">Data upload error</string>
     <string name="check_internet_connection">Check your internet connection</string>

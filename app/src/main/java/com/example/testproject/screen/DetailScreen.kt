@@ -37,7 +37,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.test.R
+import com.example.testproject.R
 import com.example.testproject.data.util.Converter
 import com.example.testproject.viewmodel.BaseViewModel
 
@@ -74,10 +74,6 @@ fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
         }
 
     }
-
-
-
-
 
     Column(
         modifier = Modifier
