@@ -23,21 +23,14 @@ import retrofit2.Response
 class BaseViewModel : ViewModel() {
     private var _rootData: MutableLiveData<List<Root>> = MutableLiveData()
     val rootData: LiveData<List<Root>> = _rootData
-
     private var _currentIndexUser: MutableLiveData<Int> = MutableLiveData(0)
     val currentIndexUser: LiveData<Int> = _currentIndexUser
-
     private val _errorEvent = MutableLiveData<Int?>(null)
     val errorEvent: LiveData<Int?> = _errorEvent
-
     private lateinit var dataBaseHelper: DataBaseHelper
-
     private var onCallPhone: ((String) -> Unit)? = null
-
     private var onOpenEmailProgram: ((String) -> Unit)? = null
-
     private var onOpenMap: ((String, String) -> Unit)? = null
-
     val googleMap = "http://maps.google.com/maps?q=loc:"
 
 
