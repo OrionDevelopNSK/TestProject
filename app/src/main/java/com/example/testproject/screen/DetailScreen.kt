@@ -1,6 +1,5 @@
 package com.example.testproject.screen
 
-import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -22,7 +21,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,45 +32,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.testproject.R
-import com.example.testproject.data.util.Converter
-import com.example.testproject.viewmodel.BaseViewModel
+import com.example.testproject.util.Converter
+import com.example.testproject.logic.viewmodel.MainViewModel
 
 @Composable
-fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
+fun DetailScreen(viewModel: MainViewModel, onNavigateToMainScreen: () -> Unit) {
 
     val root = viewModel.currentIndexUser.value?.let { viewModel.rootData.value?.get(it) } ?: return
     val result = root.results[0]
     val scrollState = rememberScrollState()
     val context = LocalContext.current
 
-    LaunchedEffect(Unit) {
-        viewModel.setCallPhoneListener { phone ->
-            val intent =
-                Intent(Intent.ACTION_DIAL, "tel: $phone".toUri())
-            context.startActivity(intent)
-        }
-
-        viewModel.setOpenEmailProgram { email ->
-            val intent =
-                Intent(Intent.ACTION_SENDTO)
-                    .setData("mailto:$email".toUri())
-            val createChooser = Intent.createChooser(intent, null)
-            context.startActivity(createChooser)
-        }
-
-        viewModel.setOpenMap { latitude, longitude ->
-            val intent =
-                Intent(
-                    Intent.ACTION_VIEW,
-                    "${viewModel.googleMap}$latitude,$longitude".toUri()
-                )
-            context.startActivity(intent)
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -192,7 +165,6 @@ fun DetailScreen(viewModel: BaseViewModel, onNavigateToMainScreen: () -> Unit) {
                 modifier = Modifier
                     .padding(4.dp)
                     .fillMaxWidth()
-                    .clickable { viewModel.openMap() }
             ) {
 
                 Spacer(modifier = Modifier.height(8.dp))

@@ -8,14 +8,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.testproject.screen.DetailScreen
 import com.example.testproject.screen.MainScreen
-import com.example.testproject.viewmodel.BaseViewModel
+import com.example.testproject.logic.viewmodel.MainViewModel
 
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = "mainScreen",
-    viewModel: BaseViewModel
+    viewModel: MainViewModel
 ) {
     NavHost(
         modifier = modifier,

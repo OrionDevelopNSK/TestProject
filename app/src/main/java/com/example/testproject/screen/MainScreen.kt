@@ -25,10 +25,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.testproject.model.Root
 import com.example.testproject.screen.container.Item
-import com.example.testproject.viewmodel.BaseViewModel
+import com.example.testproject.logic.viewmodel.MainViewModel
 
 @Composable
-fun MainScreen(viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
+fun MainScreen(viewModel: MainViewModel, onNavigateToDetailScreen: () -> Unit) {
 
     val listState = rememberLazyListState()
     val infos = viewModel.rootData.observeAsState(emptyList())

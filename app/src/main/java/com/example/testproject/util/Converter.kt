@@ -1,4 +1,4 @@
-package com.example.testproject.data.util
+package com.example.testproject.util
 
 import com.example.testproject.data.entity.CoordinatesEntity
 import com.example.testproject.data.entity.DobEntity
@@ -113,7 +113,7 @@ object Converter {
             val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm:ss")
                 .withZone(ZoneOffset.UTC)
             formatter.format(instant)
-        } catch (e: DateTimeException) {
+        } catch (_: DateTimeException) {
             str
         }
     }

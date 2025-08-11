@@ -9,10 +9,10 @@ import com.example.testproject.data.entity.RootEntity
 @Dao
 abstract class RoomDao {
     @Query("SELECT * FROM users_db")
-    abstract fun getInfoAndUserInfo() : MutableList<RootEntity>
+    abstract fun load() : MutableList<RootEntity>
 
     @Insert
-    abstract fun insertInfoAndUserInfo (rootEntity: RootEntity)
+    abstract fun save (rootEntity: RootEntity)
 
     @Query("DELETE FROM users_db")
     abstract fun clearDatabase()

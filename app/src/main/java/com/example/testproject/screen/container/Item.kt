@@ -24,11 +24,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.testproject.R
 import com.example.testproject.model.Root
-import com.example.testproject.viewmodel.BaseViewModel
+import com.example.testproject.logic.viewmodel.MainViewModel
 
 
 @Composable
-fun Item(root: Root, index: Int, viewModel: BaseViewModel, onNavigateToDetailScreen: () -> Unit) {
+fun Item(root: Root, index: Int, viewModel: MainViewModel, onNavigateToDetailScreen: () -> Unit) {
     val result = root.results[0]
     val context = LocalContext.current
 
