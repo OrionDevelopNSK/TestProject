@@ -17,31 +17,28 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.testproject.logic.viewmodel.MainViewModel
 import com.example.testproject.model.Root
 import com.example.testproject.screen.container.Item
-import com.example.testproject.logic.viewmodel.MainViewModel
 
 @Composable
 fun MainScreen(viewModel: MainViewModel, onNavigateToDetailScreen: () -> Unit) {
 
-    val listState = rememberLazyListState()
-    val infos = viewModel.rootData.observeAsState(emptyList())
     val context = LocalContext.current
+    val listState = rememberLazyListState()
     val snackbarHostState = remember { SnackbarHostState() }
-    val errorResId by viewModel.errorEvent.observeAsState(null)
-
-
+    val infos = viewModel.rootData.collectAsState()
+    val errorResId = viewModel.errorEvent.collectAsState().value
 
     LaunchedEffect(errorResId) {
         if (errorResId != null) {
             snackbarHostState.showSnackbar(
-                message = context.getString(errorResId!!),
+                message = context.getString(errorResId),
                 duration = SnackbarDuration.Short
             )
             viewModel.resetError()

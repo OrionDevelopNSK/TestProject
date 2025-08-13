@@ -1,18 +1,20 @@
 package com.example.testproject.logic.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.testproject.data.entity.RootEntity
-import com.example.testproject.util.Converter
 import com.example.testproject.logic.actions.MailSender
 import com.example.testproject.logic.actions.MapOpener
 import com.example.testproject.logic.actions.PhoneCaller
 import com.example.testproject.logic.interfaces.IDatabaseManager
 import com.example.testproject.logic.interfaces.IResultDownloader
 import com.example.testproject.model.Root
+import com.example.testproject.util.Converter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -23,12 +25,12 @@ class MainViewModel(
     val resultDownloader: IResultDownloader,
     val databaseManager: IDatabaseManager
 ) : ViewModel() {
-    private var _rootData: MutableLiveData<List<Root>> = MutableLiveData()
-    val rootData: LiveData<List<Root>> = _rootData
-    private var _currentIndexUser: MutableLiveData<Int> = MutableLiveData(0)
-    val currentIndexUser: LiveData<Int> = _currentIndexUser
-    private val _errorEvent = MutableLiveData<Int?>(null)
-    val errorEvent: LiveData<Int?> = _errorEvent
+    private val _rootData = MutableStateFlow<List<Root>>(emptyList())
+    val rootData: StateFlow<List<Root>> = _rootData.asStateFlow()
+    private val _currentIndexUser = MutableStateFlow(0)
+    val currentIndexUser: StateFlow<Int> = _currentIndexUser.asStateFlow()
+    private val _errorEvent = MutableStateFlow<Int?>(null)
+    val errorEvent: StateFlow<Int?> = _errorEvent.asStateFlow()
 
     fun setIndexUser(index: Int) {
         _currentIndexUser.value = index
@@ -39,7 +41,7 @@ class MainViewModel(
             resultDownloader.downloadResults(
                 action = { act -> saveAndLoad(act) },
                 errorHandler = { err ->
-                    _errorEvent.postValue(err)
+                    _errorEvent.update { err }
                 })
         }
     }
@@ -52,8 +54,9 @@ class MainViewModel(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 databaseManager.clear()
-                _rootData.postValue(emptyList())
+
             }
+            _rootData.update { emptyList() }
         }
     }
 
@@ -71,11 +74,11 @@ class MainViewModel(
 
     fun callPhone() = phoneCaller.execute(getResult())
 
-    private fun getResult() = currentIndexUser.value?.let { rootData.value?.get(it) }?.results?.get(0)
+    private fun getResult() = currentIndexUser.value.let { rootData.value.getOrNull(it) }?.results?.get(0)
 
     private fun load() {
         val tmp = databaseManager.load()
-        if (tmp.isNotEmpty()) _rootData.postValue(Converter.entitiesToObjects(tmp).reversed())
+        if (tmp.isNotEmpty()) _rootData.update { Converter.entitiesToObjects(tmp).reversed() }
     }
 
     private fun save(rootEntity: RootEntity) {

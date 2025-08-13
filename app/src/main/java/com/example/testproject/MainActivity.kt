@@ -1,6 +1,7 @@
 package com.example.testproject
 
 import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -10,11 +11,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.example.testproject.logic.factory.MainViewModelFactory
+import com.example.testproject.logic.viewmodel.MainViewModel
 import com.example.testproject.navigation.AppNavHost
 import com.example.testproject.ui.theme.CFTTestTheme
-import com.example.testproject.logic.viewmodel.MainViewModel
-import com.example.testproject.logic.factory.MainViewModelFactory
 
 /**
  * Прочтите README.md в корне проекта
@@ -25,27 +27,29 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityResultLauncher.launch(
-            arrayOf(
-                Manifest.permission.INTERNET,
-                Manifest.permission.CALL_PHONE
-            )
-        )
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CALL_PHONE)
+            == PackageManager.PERMISSION_GRANTED)
+            startApp() else
+            requestCallPermission()
 
         val factory = MainViewModelFactory(application)
         viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
         viewModel.loadFromDataBase()
     }
 
+    private fun requestCallPermission() {
+        activityResultLauncher.launch(Manifest.permission.CALL_PHONE)
+    }
+
     private val activityResultLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            var isGranted = false
-            permissions.entries.forEach {
-                isGranted = it.value
-            }
-            when {
-                isGranted -> startApp()
-                else -> showAccessDeniedToast()
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                startApp()
+            } else {
+                showAccessDeniedToast()
             }
         }
 

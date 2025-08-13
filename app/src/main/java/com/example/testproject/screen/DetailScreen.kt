@@ -1,5 +1,6 @@
 package com.example.testproject.screen
 
+import android.content.ActivityNotFoundException
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -21,6 +22,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,11 +44,12 @@ import com.example.testproject.logic.viewmodel.MainViewModel
 @Composable
 fun DetailScreen(viewModel: MainViewModel, onNavigateToMainScreen: () -> Unit) {
 
-    val root = viewModel.currentIndexUser.value?.let { viewModel.rootData.value?.get(it) } ?: return
-    val result = root.results[0]
-    val scrollState = rememberScrollState()
     val context = LocalContext.current
-
+    val scrollState = rememberScrollState()
+    val currentIndex by viewModel.currentIndexUser.collectAsState()
+    val rootData by viewModel.rootData.collectAsState()
+    val root = rootData.getOrNull(currentIndex) ?: return
+    val result = root.results[0]
 
     Column(
         modifier = Modifier
@@ -113,7 +117,23 @@ fun DetailScreen(viewModel: MainViewModel, onNavigateToMainScreen: () -> Unit) {
                     )
                     Text(
                         result.phone,
-                        modifier = Modifier.clickable { viewModel.callPhone() },
+                        modifier = Modifier.clickable {
+                            try {
+                                viewModel.callPhone()
+                            } catch (e: ActivityNotFoundException) {
+                                Toast.makeText(
+                                    context,
+                                    "No phone app available",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } catch (e: SecurityException) {
+                                Toast.makeText(
+                                    context,
+                                    "No access to calls",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        },
                         style = TextStyle(fontWeight = FontWeight.Bold)
                     )
                 }
@@ -153,7 +173,17 @@ fun DetailScreen(viewModel: MainViewModel, onNavigateToMainScreen: () -> Unit) {
                     )
                     Text(
                         "Latitude: ${result.location.coordinates.latitude}, longitude: ${result.location.coordinates.longitude}",
-                        modifier = Modifier.clickable { viewModel.openMap() },
+                        modifier = Modifier.clickable {
+                            try {
+                                viewModel.openMap()
+                            } catch (e: ActivityNotFoundException) {
+                                Toast.makeText(
+                                    context,
+                                    "No map app installed!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        },
                         style = TextStyle(fontWeight = FontWeight.Bold)
                     )
                 }
