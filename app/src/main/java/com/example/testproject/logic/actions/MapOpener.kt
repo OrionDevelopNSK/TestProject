@@ -1,7 +1,6 @@
 package com.example.testproject.logic.actions
 
 import android.app.Application
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import androidx.core.net.toUri
 import com.example.testproject.logic.interfaces.IAction

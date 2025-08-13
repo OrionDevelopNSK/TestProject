@@ -120,13 +120,13 @@ fun DetailScreen(viewModel: MainViewModel, onNavigateToMainScreen: () -> Unit) {
                         modifier = Modifier.clickable {
                             try {
                                 viewModel.callPhone()
-                            } catch (e: ActivityNotFoundException) {
+                            } catch (_: ActivityNotFoundException) {
                                 Toast.makeText(
                                     context,
                                     "No phone app available",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                            } catch (e: SecurityException) {
+                            } catch (_: SecurityException) {
                                 Toast.makeText(
                                     context,
                                     "No access to calls",
@@ -176,7 +176,7 @@ fun DetailScreen(viewModel: MainViewModel, onNavigateToMainScreen: () -> Unit) {
                         modifier = Modifier.clickable {
                             try {
                                 viewModel.openMap()
-                            } catch (e: ActivityNotFoundException) {
+                            } catch (_: ActivityNotFoundException) {
                                 Toast.makeText(
                                     context,
                                     "No map app installed!",
